@@ -15,30 +15,8 @@ def home():
     return render_template("home.html")
 
 
-# ----------------------------------------
-# API Prediction Route (For Postman / JSON)
-# ----------------------------------------
-@app.route("/predict_api", methods=["POST"])
-def predict_api():
-
-    # FIX: request.json (not request.jason)
-    data = request.json["data"]
-
-    # Convert values to numpy array
-    input_array = np.array(list(data.values())).reshape(1, -1)
-
-    # Scale input
-    scaled_data = reg_scaler.transform(input_array)
-
-    # Predict
-    output = reg_model.predict(scaled_data)
-
-    return jsonify({"prediction": output[0]})
-
-
-# ----------------------------------------
 # HTML Form Prediction Route
-# ----------------------------------------
+
 @app.route("/predict", methods=["POST"])
 def predict():
 
